@@ -5,7 +5,6 @@ export const List = styled.ul`
 
     list-style: none;
     margin: 0;
-    padding: 20px 0 0 30px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -33,4 +32,7 @@ export const Item = styled.li`
         border-bottom: 1px solid #54585D;
     }
 
+    :first-child {
+        padding-top: 30px;
+    }
 `

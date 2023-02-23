@@ -12,8 +12,8 @@ import {
   InputNumber,
 } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contactsSlice';
-import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/operations';
+import { selectContacts } from 'redux/selectors';
 
 
 
@@ -55,7 +55,7 @@ const phoneMask = [
 
 export const ContactForm = ({onClose}) => {
 
-  const arrContacts = useSelector(getContacts);
+  const arrContacts = useSelector(selectContacts);
   const dispatch = useDispatch()
   const handleSubmit = (values, { resetForm }) => {
       const { name } = values;

@@ -2,12 +2,12 @@ import PropTypes from 'prop-types';
 import { IoMdClose } from 'react-icons/io';
 import { Button, ContactWrap, Name, Number } from './ContactItem.styled';
 import { useDispatch } from 'react-redux';
-import { deleteContact } from 'redux/contactsSlice'
+import { deleteContact } from 'redux/operations'
 
 
 export const ContactItem = ({ name, number, id }) => {
   const dispatch = useDispatch()
-  const onDeliteContact = (contactId) => dispatch(deleteContact(contactId))
+  const onDeliteContact = () => dispatch(deleteContact(id))
 
   return (
     <>
@@ -15,7 +15,7 @@ export const ContactItem = ({ name, number, id }) => {
         <Name>{name}</Name>
         <Number>{number}</Number>
       </ContactWrap>
-      <Button type="button" onClick={() => onDeliteContact(id)}>
+      <Button type="button" onClick={onDeliteContact}>
         <IoMdClose size={25} />
       </Button>
     </>

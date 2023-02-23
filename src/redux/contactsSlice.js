@@ -1,37 +1,51 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { nanoid } from 'nanoid';
+import { createSlice } from '@reduxjs/toolkit';
+import { addContact, fetchContacts, deleteContact } from './operations';
 
-
+const handlePending = state => {
+  state.isLoading = true;
+};
+const handleRejected = (state, action) => {
+  state.isLoading = false;
+  state.error = action.payload;
+};
 
 const contactsSlice = createSlice({
-    name: "contacts",
-    initialState: [],
-    reducers: {
-        addContact: {
-            reducer(state, action) {
-              state.push(action.payload);
-            },
-            prepare({name, number}) {
-              return {
-                payload: {
-                  id: nanoid(),
-                  name,
-                  number,
-                },
-              };
-            },
-          },
-      deleteContact(state, action) {
-        return state.filter(contact => contact.id !== action.payload);
-      },
+  name: 'contacts',
+  initialState: {
+    items: [],
+    isLoading: false,
+    error: null,
+  },
+  extraReducers: {
+    [fetchContacts.pending]: handlePending,
+    [fetchContacts.rejected]: handleRejected,
+    [addContact.pending]: handlePending,
+    [addContact.rejected]: handleRejected,
+    [deleteContact.pending]: handlePending,
+    [deleteContact.rejected]: handleRejected,
+      
+    [fetchContacts.fulfilled](state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.items = action.payload;
     },
-  });
 
+    [addContact.fulfilled](state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.items.push(action.payload);
+    },
 
-
+    [deleteContact.fulfilled](state, action) {
+      state.isLoading = false;
+      state.error = null;
+      const idx = state.items.findIndex(
+        contacts => contacts.id === action.payload.id
+      );
+      state.items.splice(idx, 1);
+    },
+ 
+  },
+});
 
 export const contactReducer = contactsSlice.reducer;
-export const { addContact, deleteContact } = contactsSlice.actions;
-  
-
-  

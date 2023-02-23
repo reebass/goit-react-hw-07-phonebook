@@ -1,5 +1,5 @@
 import styled from "styled-components";
-// import { ReactComponent as CloseBtnIcon } from "../icons/close.svg";
+
 
 export const ModalBackDrop = styled.div`
     position: fixed;
